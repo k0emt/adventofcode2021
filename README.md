@@ -14,7 +14,9 @@ I have a couple of test cases that use the same test data.  How can I set this s
 
 ### Day 2
 
-How can I implement dependency injection (DI)?  I want to be able to inject either version of sub into the script runner code.
+How can I implement dependency injection (DI)?  I want to be able to inject either version of sub into the script runner code.  
+
+DONE.  Injected script runner function.
 
 ## Reference
 
