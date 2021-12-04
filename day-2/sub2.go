@@ -1,9 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"log"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -39,29 +36,5 @@ func (s *Sub2) executeCommand(command string) {
 		s.goDown(amount)
 	case "up":
 		s.goUp(amount)
-	}
-}
-
-// NOTE: seems like there should be an elegant way to remove this duplication between subs
-func (s *Sub2) executeFromScript(fileName string) {
-	file, err := os.Open(fileName)
-
-	if err != nil {
-		log.Fatalf("failed to open")
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
-	scanner.Split(bufio.ScanLines)
-	var text []string
-
-	for scanner.Scan() {
-		text = append(text, scanner.Text())
-	}
-
-	for _, each_ln := range text {
-		// fmt.Println(each_ln)
-		s.executeCommand(each_ln)
 	}
 }
