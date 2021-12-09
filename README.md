@@ -10,7 +10,7 @@ I will be tackling the problems with [Go](https://go.dev/).  This is because I a
 
 ### Day 1
 
-I have a couple of test cases that use the same test data.  How can I set this shared code up as a constant?
+I have a couple of test cases that use the same test data.  How can I set this shared code up as a constant?  Currently, only basic data types (int, float, bool, string, ...) can be set up as constants.  In order to reuse something like an `[]int` wrap it in a function.
 
 ### Day 2
 
