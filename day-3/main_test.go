@@ -6,10 +6,19 @@ import (
 
 func TestFunction(t *testing.T) {
 
-	// actual := functionUnderTest()
-	// expected := XXXX
+	mp := MetricParser{0, 0, 0, make([]int, 5)}
 
-	// if actual != expected {
-	// 	t.Errorf("Expected %v, but got %v", expected, actual)
-	// }
+	loadData("test-input.dat", mp.addDataPoint)
+
+	if mp.Gamma != 22 {
+		t.Errorf("Gama Received %v, Expected %v", mp.Gamma, 22)
+	}
+
+	if mp.Epsilon != 9 {
+		t.Errorf("Epsilon Received %v, Expected %v", mp.Epsilon, 9)
+	}
+
+	if mp.Power != 198 {
+		t.Errorf("Power Received %v, Expected %v", mp.Power, 190)
+	}
 }
