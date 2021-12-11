@@ -13,6 +13,9 @@ func main() {
 	loadData("problem3.dat", mp.addDataPoint, false)
 	mp.analyze()
 	fmt.Printf("Gamma: %v, Epsilon: %v, Power: %v\n", mp.Gamma, mp.Epsilon, mp.Power)
+
+	mp.calculateLifeSupport()
+	fmt.Printf("O2: %v, CO2: %v, LS: %v\n", mp.Oxygen, mp.CO2, mp.LifeSupport)
 }
 
 // execute from script
