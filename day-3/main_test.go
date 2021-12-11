@@ -6,19 +6,36 @@ import (
 
 func TestFunction(t *testing.T) {
 
-	mp := MetricParser{0, 0, 0, make([]int, 5)}
+	mp := MetricParser{}
 
-	loadData("test-input.dat", mp.addDataPoint)
+	loadData("test-input.dat", mp.addDataPoint, true)
 
-	if mp.Gamma != 22 {
-		t.Errorf("Gama Received %v, Expected %v", mp.Gamma, 22)
+	mp.counters()
+
+	expected := 12
+	if mp.state.counter != expected {
+		t.Errorf("Expected to process %v lines, but got %v lines", expected, mp.state.counter)
 	}
 
-	if mp.Epsilon != 9 {
-		t.Errorf("Epsilon Received %v, Expected %v", mp.Epsilon, 9)
+	expected = 5
+	if mp.state.dataWidth != expected {
+		t.Errorf("Expected data width %v, but got %v", expected, mp.state.dataWidth)
 	}
 
-	if mp.Power != 198 {
-		t.Errorf("Power Received %v, Expected %v", mp.Power, 190)
+	mp.analyze()
+
+	expected = 22
+	if mp.Gamma != expected {
+		t.Errorf("Gama Received %v, Expected %v", mp.Gamma, expected)
+	}
+
+	expected = 9
+	if mp.Epsilon != expected {
+		t.Errorf("Epsilon Received %v, Expected %v", mp.Epsilon, expected)
+	}
+
+	expected = 198
+	if mp.Power != expected {
+		t.Errorf("Power Received %v, Expected %v", mp.Power, expected)
 	}
 }

@@ -9,13 +9,14 @@ import (
 
 func main() {
 	fmt.Println("Advent of Code, Day 3")
-	mp := MetricParser{0, 0, 0, make([]int, 5)}
-	loadData("problem3.dat", mp.addDataPoint)
+	mp := MetricParser{}
+	loadData("problem3.dat", mp.addDataPoint, false)
+	mp.analyze()
 	fmt.Printf("Gamma: %v, Epsilon: %v, Power: %v\n", mp.Gamma, mp.Epsilon, mp.Power)
 }
 
 // execute from script
-func loadData(dataFileName string, metricParserAddPoint func(string)) {
+func loadData(dataFileName string, metricParserAddPoint func(string, bool), verbose bool) {
 	file, err := os.Open(dataFileName)
 
 	if err != nil {
@@ -34,6 +35,6 @@ func loadData(dataFileName string, metricParserAddPoint func(string)) {
 
 	for _, each_ln := range text {
 		// fmt.Println(each_ln)
-		metricParserAddPoint(each_ln)
+		metricParserAddPoint(each_ln, verbose)
 	}
 }
