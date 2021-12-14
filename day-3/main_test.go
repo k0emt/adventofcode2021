@@ -13,13 +13,13 @@ func TestPart1(t *testing.T) {
 	mp.counters()
 
 	expected := 12
-	if mp.state.counter != expected {
-		t.Errorf("Expected to process %v lines, but got %v lines", expected, mp.state.counter)
+	if mp.counter != expected {
+		t.Errorf("Expected to process %v lines, but got %v lines", expected, mp.counter)
 	}
 
 	expected = 5
-	if mp.state.dataWidth != expected {
-		t.Errorf("Expected data width %v, but got %v", expected, mp.state.dataWidth)
+	if mp.dataWidth != expected {
+		t.Errorf("Expected data width %v, but got %v", expected, mp.dataWidth)
 	}
 
 	mp.analyze()
@@ -74,8 +74,6 @@ func testNumbers() []string {
 
 func TestBitFrequencyPositionZero(t *testing.T) {
 
-	//mp := MetricParser{}
-
 	zeroes, ones := determineBitFrequency(0, testNumbers())
 
 	if zeroes != 2 {
@@ -88,8 +86,6 @@ func TestBitFrequencyPositionZero(t *testing.T) {
 }
 
 func TestBitFrequencyPositionOne(t *testing.T) {
-
-	//mp := MetricParser{}
 
 	zeroes, ones := determineBitFrequency(1, testNumbers())
 
@@ -129,6 +125,7 @@ func TestBitCommonPos1(t *testing.T) {
 }
 
 func TestBitEqual(t *testing.T) {
+
 	testNumbers := []string{"0", "1"}
 	leastCommon, mostCommon := determineCommon(0, testNumbers)
 

@@ -9,19 +9,15 @@ type MetricParser struct {
 	Gamma       int
 	Epsilon     int
 	Power       int
-	state       internals
-	zeroCounter [16]int
-	oneCounter  [16]int
-
 	LifeSupport int
 	Oxygen      int
 	CO2         int
-}
 
-type internals struct {
-	counter    int
-	dataWidth  int
-	dataPoints []string
+	counter     int
+	dataWidth   int
+	dataPoints  []string
+	zeroCounter [16]int
+	oneCounter  [16]int
 }
 
 func (mp *MetricParser) addDataPoint(dataPoint string, verbose bool) {
@@ -30,13 +26,13 @@ func (mp *MetricParser) addDataPoint(dataPoint string, verbose bool) {
 		fmt.Println(dataPoint)
 	}
 
-	if len(dataPoint) > mp.state.dataWidth {
-		mp.state.dataWidth = len(dataPoint)
+	if len(dataPoint) > mp.dataWidth {
+		mp.dataWidth = len(dataPoint)
 	}
 
-	mp.state.dataPoints = append(mp.state.dataPoints, dataPoint)
+	mp.dataPoints = append(mp.dataPoints, dataPoint)
 
-	mp.state.counter++
+	mp.counter++
 	for i := range dataPoint {
 		if dataPoint[i] == '0' {
 			mp.zeroCounter[i]++
@@ -48,10 +44,10 @@ func (mp *MetricParser) addDataPoint(dataPoint string, verbose bool) {
 
 func (mp *MetricParser) analyze() {
 
-	gamma := make([]byte, mp.state.dataWidth)
-	epsilon := make([]byte, mp.state.dataWidth)
+	gamma := make([]byte, mp.dataWidth)
+	epsilon := make([]byte, mp.dataWidth)
 
-	for i := 0; i < mp.state.dataWidth; i++ {
+	for i := 0; i < mp.dataWidth; i++ {
 		if mp.zeroCounter[i] > mp.oneCounter[i] {
 			gamma[i] = '0'
 			epsilon[i] = '1'
@@ -72,14 +68,15 @@ func (mp *MetricParser) analyze() {
 
 func (mp *MetricParser) calculateLifeSupport() {
 
-	mp.Oxygen = calculateOxygen(0, mp.state.dataPoints)
+	mp.Oxygen = calculateOxygen(0, mp.dataPoints)
 
-	mp.CO2 = calculateCO2(0, mp.state.dataPoints)
+	mp.CO2 = calculateCO2(0, mp.dataPoints)
 
 	mp.LifeSupport = mp.Oxygen * mp.CO2
 }
 
 func calculateOxygen(bitPosition int, dataRows []string) int {
+
 	retVal := 0
 
 	if len(dataRows) > 1 {
@@ -103,6 +100,7 @@ func calculateOxygen(bitPosition int, dataRows []string) int {
 }
 
 func calculateCO2(bitPosition int, dataRows []string) int {
+
 	retVal := 0
 
 	if len(dataRows) > 1 {
@@ -126,6 +124,7 @@ func calculateCO2(bitPosition int, dataRows []string) int {
 }
 
 func determineBitFrequency(position int, readings []string) (int, int) {
+
 	zeroes, ones := 0, 0
 
 	for i := range readings {
@@ -140,6 +139,7 @@ func determineBitFrequency(position int, readings []string) (int, int) {
 }
 
 func determineCommon(position int, readings []string) (leastCommon rune, mostCommon rune) {
+
 	zeroes, ones := determineBitFrequency(position, readings)
 
 	if zeroes > ones {
